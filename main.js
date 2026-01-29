@@ -90,7 +90,7 @@ window.addEventListener("load", () => {
   // Get value from first page
   const letterCount = Number(localStorage.getItem("letterCount")) || 7;
 
-  const instructionText = "Spell mo yung nae sa isip mo. Column lang ang titingnan. piliin mo yung number in order dapat sa name)";
+  const instructionText = "Spell mo yung nae sa isip mo, Column lang ang titingnan. piliin mo yung number in order dapat sa name)";
   const promptText = "";
   const subText = "";
 
@@ -235,7 +235,7 @@ window.addEventListener("load", () => {
   const letterTable = buildTable();
 
   // Display instruction text above table with typing effect
-  const instructionText = "Spell mo ulit sa isip mo. Row lang ang titingnan. piliin mo yung number in order dapat sa name";
+  const instructionText = "Spell mo ulit sa isip mo, Row lang ang titingnan. piliin mo yung number in order dapat sa name";
   
   function typeText(el, text, speed = 40) {
     if (!el) return;

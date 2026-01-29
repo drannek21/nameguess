@@ -201,7 +201,7 @@ body.step2 .cell {
   border-right: 3px solid #e74c3c;
   border-top: none;
   border-bottom: none;
-  background-color: #ffffff;
+  background-color: #fffff1;
 }
 
 /* Remove right border from last column cells (handled dynamically via JS or accept it) */
