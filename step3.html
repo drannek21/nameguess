@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NAMEGUESS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="step3">
+
+<h1>NAMEGUESS</h1>
+
+<div class="wrapper">
+
+  <!-- LEFT -->
+  <div class="table-section">
+    <div class="table-instruction" id="tableInstruction"></div>
+    <div class="grid-container">
+      <div class="row-numbers" id="rowNumbers"></div>
+      <div class="grid" id="letterGrid"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <div class="prompt" id="prompt"></div>
+
+    <input
+      id="rowInput"
+      placeholder="Hal: 2 1 2 2 1 3 2"
+    />
+
+    <button id="okBtn">OK</button>
+
+    <div id="loading">Binabasa ang isip mo...</div>
+    <div id="result"></div>
+  </div>
+
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
