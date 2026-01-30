@@ -89,7 +89,7 @@ body.step1 input {
   outline: none;
 }
 
-body.step1 button {
+body.step1 .container button {
   margin-top: 15px;
   padding: 12px 40px;
   font-size: 18px;
@@ -276,7 +276,7 @@ body.step2 input:focus {
   border-color: #42b7ff;
 }
 
-body.step2 button {
+body.step2 .right button {
   margin-top: 30px;
   padding: 12px 40px;
   font-size: 16px;
@@ -407,7 +407,7 @@ body.step3 input:focus {
   border-color: #42b7ff;
 }
 
-body.step3 button {
+body.step3 .right button {
   margin-top: 30px;
   padding: 12px 40px;
   font-size: 16px;
@@ -974,5 +974,102 @@ body.step3 #result {
 
   body.step3 button:hover {
     background-color: #3aa3e6;
+  }
+}
+
+/* ===============================
+   Floating Reset Button (Step 3)
+   Uses body.step3 button.reset-btn so these rules win over body.step3 button
+   in media queries (avoids full-width, large padding, blue styles on mobile).
+   =============================== */
+body.step3 button.reset-btn,
+button.reset-btn {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top, 16px));
+  right: max(16px, env(safe-area-inset-right, 16px));
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 10px 14px;
+  min-height: 44px;
+  min-width: 44px;
+  border-radius: 999px;
+  box-sizing: border-box;
+
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #ddd;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  -webkit-tap-highlight-color: transparent;
+
+  /* Reset conflicting inherited/global styles */
+  margin: 0;
+  width: auto;
+  max-width: none;
+}
+
+body.step3 button.reset-btn:hover,
+button.reset-btn:hover {
+  transform: translateY(-2px) rotate(-5deg);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  background: #fff;
+}
+
+body.step3 button.reset-btn:active,
+button.reset-btn:active {
+  transform: scale(0.96);
+}
+
+/* 768px: keep tap target, prevent any body.step3 button from leaking */
+@media (max-width: 768px) {
+  body.step3 button.reset-btn,
+  button.reset-btn {
+    top: max(12px, env(safe-area-inset-top, 12px));
+    right: max(12px, env(safe-area-inset-right, 12px));
+    padding: 10px 12px;
+    min-height: 44px;
+    min-width: 44px;
+    font-size: 14px;
+  }
+}
+
+/* 480px: icon-only on small phones, compact padding */
+@media (max-width: 480px) {
+  body.step3 button.reset-btn,
+  button.reset-btn {
+    top: max(10px, env(safe-area-inset-top, 10px));
+    right: max(10px, env(safe-area-inset-right, 10px));
+    padding: 10px;
+    min-height: 44px;
+    min-width: 44px;
+    font-size: 13px;
+  }
+
+  body.step3 button.reset-btn span,
+  button.reset-btn span {
+    display: none;
+  }
+}
+
+/* 320px (iPhone SE narrow): minimal padding, safe area */
+@media (max-width: 320px) {
+  body.step3 button.reset-btn,
+  button.reset-btn {
+    top: max(8px, env(safe-area-inset-top, 8px));
+    right: max(8px, env(safe-area-inset-right, 8px));
+    padding: 8px;
+    min-height: 44px;
+    min-width: 44px;
   }
 }

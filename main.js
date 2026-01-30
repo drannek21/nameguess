@@ -90,7 +90,7 @@ window.addEventListener("load", () => {
   // Get value from first page
   const letterCount = Number(localStorage.getItem("letterCount")) || 7;
 
-  const instructionText = "Spell mo yung nae sa isip mo, Column lang ang titingnan. piliin mo yung number in order dapat sa name)";
+  const instructionText = "Spell mo yung name sa isip mo, Column lang ang titingnan. piliin mo yung number in order dapat sa name)";
   const promptText = "";
   const subText = "";
 
@@ -153,7 +153,7 @@ window.addEventListener("load", () => {
       cell.textContent = alphabet[i];
     } else {
       // Fill empty cells with random letters
-      cell.textContent = getRandomLetter();
+      cell.textContent = "";
     }
     grid.appendChild(cell);
   }
@@ -207,11 +207,20 @@ window.addEventListener("load", () => {
   const letterCount = Number(localStorage.getItem("letterCount"));
   const columnChoices = JSON.parse(localStorage.getItem("columnChoices"));
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const usedLetters = new Set(alphabet);
 
   // Function to get random letter
-  function getRandomLetter() {
+function getSafeRandomLetter() {
+  const safeLetters = alphabet.filter(l => !usedLetters.has(l));
+
+  // fallback (just in case)
+  if (safeLetters.length === 0) {
     return alphabet[Math.floor(Math.random() * alphabet.length)];
   }
+
+  return safeLetters[Math.floor(Math.random() * safeLetters.length)];
+}
+
 
   // Build table (same logic as original step3.js)
   function buildTable() {
@@ -227,7 +236,7 @@ window.addEventListener("load", () => {
       columnChoices.map(col => {
         const letter = row[col - 1];
         // If cell is empty, fill with random letter
-        return letter || getRandomLetter();
+        return letter || getSafeRandomLetter();
       })
     );
   }
@@ -274,7 +283,7 @@ window.addEventListener("load", () => {
       const cell = document.createElement("div");
       cell.className = "cell";
       // Ensure cell always has content (should already be filled by buildTable, but double-check)
-      cell.textContent = letter || getRandomLetter();
+      cell.textContent = letter || getSafeRandomLetter();
       grid.appendChild(cell);
     });
   });
@@ -323,4 +332,23 @@ window.addEventListener("load", () => {
     return name;
   }
 })();
+
+//for reset buton
+const resetBtn = document.getElementById("resetBtn");
+
+if (resetBtn) {
+  resetBtn.addEventListener("click", () => {
+    if (!confirm("Uulitin mo ba mula simula?")) return;
+
+    // nice exit animation
+    document.body.style.transition = "opacity 0.4s ease";
+    document.body.style.opacity = "0";
+
+    setTimeout(() => {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }, 400);
+  });
+}
+
 
