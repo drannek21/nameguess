@@ -75,6 +75,12 @@ window.addEventListener("load", () => {
   });
 })();
 
+// Shared helper: get a random readable color for letters
+function getRandomColor() {
+  const h = Math.floor(Math.random() * 360);
+  return `hsl(${h}, 70%, 35%)`;
+}
+
 // STEP 2: Column selection page (step2.html)
 (function () {
   const promptEl = document.getElementById("prompt");
@@ -84,13 +90,19 @@ window.addEventListener("load", () => {
   const okBtn = document.getElementById("okBtn");
   const colNumbers = document.getElementById("colNumbers");
   const grid = document.getElementById("letterGrid");
+  
 
   if (!promptEl || !subpromptEl || !userInput || !okBtn || !colNumbers || !grid) return;
 
   // Get value from first page
   const letterCount = Number(localStorage.getItem("letterCount")) || 7;
 
-  const instructionText = "Spell mo yung name sa isip mo, Column lang ang titingnan. piliin mo yung number in order dapat sa name)";
+  const instructionText =
+"-spell sa isip ang pangalan\n" +
+"-Column lang ang titingnan\n" +
+"-Hanapin ang bawat letter at piliin ang katumbas na column number\n" +
+"-Dapat sunod-sunod ang pagpili ng number base sa spelling ng name";
+
   const promptText = "";
   const subText = "";
 
@@ -106,6 +118,7 @@ window.addEventListener("load", () => {
   }
 
   window.addEventListener("load", () => {
+    
     // Display instruction above table
     if (tableInstructionEl && instructionText) {
       typeText(tableInstructionEl, instructionText);
@@ -141,6 +154,8 @@ window.addEventListener("load", () => {
     return alphabet[Math.floor(Math.random() * alphabet.length)];
   }
 
+
+
   // Calculate total cells needed (rows * columns)
   const totalRows = Math.ceil(alphabet.length / letterCount);
   const totalCells = totalRows * letterCount;
@@ -155,8 +170,14 @@ window.addEventListener("load", () => {
       // Fill empty cells with random letters
       cell.textContent = "";
     }
+    cell.style.color = getRandomColor();
     grid.appendChild(cell);
   }
+
+  // Re-apply colors to every cell as a fallback to ensure none are left uncolored
+  grid.querySelectorAll('.cell').forEach(cell => {
+    cell.style.color = getRandomColor();
+  });
 
   // Input control
   userInput.addEventListener("input", () => {
@@ -222,6 +243,8 @@ function getSafeRandomLetter() {
 }
 
 
+
+
   // Build table (same logic as original step3.js)
   function buildTable() {
     const rows = [];
@@ -244,7 +267,11 @@ function getSafeRandomLetter() {
   const letterTable = buildTable();
 
   // Display instruction text above table with typing effect
-  const instructionText = "Spell mo ulit sa isip mo, Row lang ang titingnan. piliin mo yung number in order dapat sa name";
+   const instructionText =
+"-spell ulit sa isip ang pangalan.\n" +
+"-Row lang ang titingnan.\n" +
+"-Hanapin ang bawat letter, piliin ang katumbas na column number.\n" +
+"-In order sa spell ng name.";
   
   function typeText(el, text, speed = 40) {
     if (!el) return;
@@ -284,8 +311,14 @@ function getSafeRandomLetter() {
       cell.className = "cell";
       // Ensure cell always has content (should already be filled by buildTable, but double-check)
       cell.textContent = letter || getSafeRandomLetter();
+      cell.style.color = getRandomColor();
       grid.appendChild(cell);
     });
+  });
+
+  // Re-apply colors to every cell as a fallback to ensure none are left uncolored
+  grid.querySelectorAll('.cell').forEach(cell => {
+    cell.style.color = getRandomColor();
   });
 
   // Input control

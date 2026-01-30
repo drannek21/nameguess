@@ -61,6 +61,8 @@ body.step1 h1 {
   justify-content: center;
   padding: 10px 0;
   margin-bottom: 10px;
+  /* Allow typed text to render line breaks (\n) */
+  white-space: pre-line;
 }
 
 .subtext {
@@ -72,6 +74,8 @@ body.step1 h1 {
   justify-content: center;
   padding: 5px 0;
   margin-bottom: 10px;
+  /* Allow typed text to render line breaks (\n) */
+  white-space: pre-line;
 }
 
 .input-box {
@@ -149,7 +153,11 @@ body.step2 .table-instruction {
   justify-content: center;
   width: 100%;
   box-sizing: border-box;
-}
+  /* Preserve newline characters (\n) so typed text can break lines */
+  white-space: pre-line;
+  /* Allow long words to wrap if necessary */
+  overflow-wrap: anywhere;
+} 
 
 body.step2 .grid-container {
   text-align: center;
@@ -158,12 +166,19 @@ body.step2 .grid-container {
 body.step2 .numbers {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 50px;
+  grid-auto-columns: 60px;
   gap: 0;
   margin-bottom: 10px;
-}
+} 
 
 body.step2 .numbers div {
+  font-weight: bold;
+  color: #000;
+}
+
+/* Row number labels */
+body.step3 .row-numbers div {
+  color: #000;
   font-weight: bold;
 }
 
@@ -171,9 +186,9 @@ body.step2 .numbers div {
 body.step2 .grid,
 body.step3 .grid {
   display: grid;
-  grid-template-columns: repeat(var(--cols), 50px);
+  grid-template-columns: repeat(var(--cols), 60px);
   border: none;
-}
+} 
 
 body.step2 .cell,
 body.step3 .cell {
@@ -182,11 +197,11 @@ body.step3 .cell {
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 14px;
-  width: 50px;
-  height: 50px;
+  font-size: 16px;
+  width: 60px;
+  height: 60px;
   box-sizing: border-box;
-}
+} 
 
 /* Step 2: Visible vertical lines only (column separators) - thicker RED lines */
 body.step2 .grid {
@@ -243,7 +258,9 @@ body.step2 .prompt {
   align-items: center;
   justify-content: center;
   padding: 5px 0;
-}
+  /* Allow typed text to render line breaks (\n) */
+  white-space: pre-line;
+} 
 
 body.step2 .subprompt {
   margin-top: 10px;
@@ -346,7 +363,11 @@ body.step3 .table-instruction {
   justify-content: center;
   width: 100%;
   box-sizing: border-box;
-}
+  /* Preserve newline characters (\n) so typed text can break lines */
+  white-space: pre-line;
+  /* Allow long words to wrap if necessary */
+  overflow-wrap: anywhere;
+} 
 
 body.step3 .grid-container {
   display: flex;
@@ -385,7 +406,9 @@ body.step3 .prompt {
   align-items: center;
   justify-content: center;
   padding: 5px 0;
-}
+  /* Allow typed text to render line breaks (\n) */
+  white-space: pre-line;
+} 
 
 body.step3 input {
   width: 100%;
@@ -638,22 +661,22 @@ body.step3 #result {
     margin: 0 auto;
     max-width: calc(100vw - 40px);
     overflow: hidden;
-    grid-template-columns: repeat(var(--cols), 45px);
+    grid-template-columns: repeat(var(--cols), 55px);
     background-color: #f5f7fa;
     padding: 3px;
-  }
+  } 
 
   body.step2 .cell {
-    width: 45px;
-    height: 45px;
-    font-size: 13px;
+    width: 55px;
+    height: 55px;
+    font-size: 15px;
     border-right: 3px solid #e74c3c;
     background-color: #ffffff;
-  }
+  } 
 
   body.step2 .numbers {
-    grid-auto-columns: 45px;
-  }
+    grid-auto-columns: 55px;
+  } 
 
   /* Step 3: Scale table to fit without horizontal scroll */
   body.step3 .grid-container {
@@ -680,18 +703,18 @@ body.step3 #result {
     margin: 0;
     max-width: calc(100vw - 80px);
     overflow: hidden;
-    grid-template-columns: repeat(var(--cols), 45px);
+    grid-template-columns: repeat(var(--cols), 55px);
     background-color: #f5f7fa;
     padding: 3px;
-  }
+  } 
 
   body.step3 .cell {
-    width: 45px;
-    height: 45px;
-    font-size: 13px;
+    width: 55px;
+    height: 55px;
+    font-size: 15px;
     border-bottom: 3px solid #e74c3c;
     background-color: #ffffff;
-  }
+  } 
 }
 
 @media (max-width: 480px) {
@@ -721,23 +744,23 @@ body.step3 #result {
   /* Step 2: Smaller table cells */
   body.step2 .grid {
     max-width: calc(100vw - 30px);
-    grid-template-columns: repeat(var(--cols), 40px);
+    grid-template-columns: repeat(var(--cols), 48px);
     background-color: #f5f7fa;
     padding: 3px;
-  }
+  } 
 
   body.step2 .cell {
-    width: 40px;
-    height: 40px;
-    font-size: 12px;
+    width: 48px;
+    height: 48px;
+    font-size: 13px;
     border-right: 3px solid #e74c3c;
     background-color: #ffffff;
-  }
+  } 
 
   body.step2 .numbers {
-    grid-auto-columns: 40px;
+    grid-auto-columns: 48px;
     font-size: 12px;
-  }
+  } 
 
   /* Step 2: Form elements */
   body.step2 .prompt {
@@ -788,30 +811,30 @@ body.step3 #result {
 
   body.step3 .row-numbers {
     margin-right: 6px;
-    grid-auto-rows: 40px;
+    grid-auto-rows: 48px;
     font-size: 13px;
-    min-width: 24px;
-  }
+    min-width: 28px;
+  } 
 
   body.step3 .row-numbers div {
-    min-width: 24px;
+    min-width: 28px;
     font-size: 13px;
   }
 
   body.step3 .grid {
     max-width: calc(100vw - 60px);
-    grid-template-columns: repeat(var(--cols), 40px);
+    grid-template-columns: repeat(var(--cols), 48px);
     background-color: #f5f7fa;
     padding: 3px;
-  }
+  } 
 
   body.step3 .cell {
-    width: 40px;
-    height: 40px;
-    font-size: 11px;
+    width: 48px;
+    height: 48px;
+    font-size: 12px;
     border-bottom: 3px solid #e74c3c;
     background-color: #ffffff;
-  }
+  } 
 
   /* Step 3: Form elements */
   body.step3 .prompt {
@@ -879,23 +902,23 @@ body.step3 #result {
 
   body.step2 .grid {
     max-width: calc(100vw - 20px);
-    grid-template-columns: repeat(var(--cols), 35px);
+    grid-template-columns: repeat(var(--cols), 40px);
     background-color: #f5f7fa;
     padding: 2px;
-  }
+  } 
 
   body.step2 .cell {
-    width: 35px;
-    height: 35px;
-    font-size: 11px;
+    width: 40px;
+    height: 40px;
+    font-size: 12px;
     border-right: 3px solid #e74c3c;
     background-color: #ffffff;
-  }
+  } 
 
   body.step2 .numbers {
-    grid-auto-columns: 35px;
+    grid-auto-columns: 40px;
     font-size: 11px;
-  }
+  } 
 
   body.step2 input {
     font-size: 15px;
@@ -927,30 +950,30 @@ body.step3 #result {
 
   body.step3 .row-numbers {
     margin-right: 5px;
-    grid-auto-rows: 35px;
-    min-width: 22px;
+    grid-auto-rows: 40px;
+    min-width: 24px;
     font-size: 12px;
-  }
+  } 
 
   body.step3 .row-numbers div {
-    min-width: 22px;
+    min-width: 24px;
     font-size: 12px;
   }
 
   body.step3 .grid {
     max-width: calc(100vw - 50px);
-    grid-template-columns: repeat(var(--cols), 35px);
+    grid-template-columns: repeat(var(--cols), 40px);
     background-color: #f5f7fa;
     padding: 2px;
-  }
+  } 
 
   body.step3 .cell {
-    width: 35px;
-    height: 35px;
-    font-size: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 11px;
     border-bottom: 3px solid #e74c3c;
     background-color: #ffffff;
-  }
+  } 
 
   body.step3 input {
     font-size: 15px;
@@ -1073,3 +1096,8 @@ button.reset-btn:active {
     min-width: 44px;
   }
 }
+
+#instructions {
+  white-space: pre-line;
+}
+
