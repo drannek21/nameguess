@@ -83,33 +83,55 @@ body.step1 h1 {
   margin-bottom: 10px;
 }
 
-body.step1 input {
-  width: 120px;
+/* Shared input/button styles */
+.input {
   padding: 12px;
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
   border-radius: 20px;
   border: 2px solid #b3e5f2;
   outline: none;
+  background-color: #f8f9fa;
+  box-sizing: border-box;
 }
 
-body.step1 .container button {
+.input:focus {
+  background-color: #ffffff;
+  border-color: #42b7ff;
+}
+
+.btn {
   margin-top: 15px;
   padding: 12px 40px;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 25px;
   border: none;
   background: #42b7ff;
-  color: #000;
+  color: #ffffff;
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover { background-color: #3aa3e6; }
+.btn:active { transform: scale(0.98); }
+
+/* Step1 overrides */
+body.step1 .input {
+  width: 120px;
+  font-size: 18px;
+}
+
+body.step1 .btn {
+  color: #000;
+  font-size: 18px;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-body.step1 button:hover {
+body.step1 .btn:hover {
   opacity: 0.9;
-}
+} 
 
 /* ===============================
    Step 2 (step2.html)
@@ -273,48 +295,19 @@ body.step2 .subprompt {
   padding: 5px 0;
 }
 
-body.step2 input {
+body.step2 .input {
   width: 100%;
   max-width: 280px;
   margin-top: 25px;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 20px;
-  border: 2px solid #b3e5f2;
-  outline: none;
-  text-align: center;
-  background-color: #f8f9fa;
-  transition: background-color 0.2s ease;
-  box-sizing: border-box;
 }
 
-body.step2 input:focus {
-  background-color: #ffffff;
-  border-color: #42b7ff;
-}
-
-body.step2 .right button {
+body.step2 .right .btn {
   margin-top: 30px;
-  padding: 12px 40px;
-  font-size: 16px;
-  border-radius: 25px;
-  border: none;
-  background: #42b7ff;
-  color: #ffffff;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
   width: 100%;
   max-width: 280px;
-  box-sizing: border-box;
 }
 
-body.step2 button:hover {
-  background-color: #3aa3e6;
-}
-
-body.step2 button:active {
-  transform: scale(0.98);
-}
+/* Hover/active handled by .btn */
 
 /* ===============================
    Step 3 (step3.html)
@@ -398,6 +391,70 @@ body.step3 .right {
   justify-content: flex-start;
 }
 
+/* Modal used for UI-only personal questions (no side-effects) */
+.question-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 12, 20, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.question-modal .modal-content {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.question-modal .modal-question {
+  font-weight: bold;
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+
+.question-modal .modal-answer {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 2px solid #e8e8ef;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.question-modal .modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.question-modal .modal-actions button {
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background: #42b7ff;
+  color: #fff;
+}
+
+.question-modal .validation-message {
+  color: #c0392b;
+  margin-bottom: 8px;
+  min-height: 18px;
+  font-size: 14px;
+}
+
+.question-modal .modal-actions button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 body.step3 .prompt {
   font-weight: bold;
   min-height: 40px;
@@ -410,48 +467,19 @@ body.step3 .prompt {
   white-space: pre-line;
 } 
 
-body.step3 input {
+body.step3 .input {
   width: 100%;
   max-width: 280px;
   margin-top: 25px;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 20px;
-  border: 2px solid #b3e5f2;
-  outline: none;
-  text-align: center;
-  background-color: #f8f9fa;
-  transition: background-color 0.2s ease;
-  box-sizing: border-box;
 }
 
-body.step3 input:focus {
-  background-color: #ffffff;
-  border-color: #42b7ff;
-}
-
-body.step3 .right button {
+body.step3 .right .btn {
   margin-top: 30px;
-  padding: 12px 40px;
-  font-size: 16px;
-  border-radius: 25px;
-  border: none;
-  background: #42b7ff;
-  color: #ffffff;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
   width: 100%;
   max-width: 280px;
-  box-sizing: border-box;
 }
 
-body.step3 button:hover {
-  background-color: #3aa3e6;
-}
-
-body.step3 button:active {
-  transform: scale(0.98);
-}
+/* Hover/active handled by .btn */
 
 body.step3 #loading {
   display: none;
@@ -500,11 +528,11 @@ body.step3 #result {
     padding: 5px 0;
   }
 
-  body.step1 input {
+  body.step1 .input {
     width: 160px;
   }
 
-  body.step1 button {
+  body.step1 .btn {
     width: 100%;
     max-width: 260px;
   }
@@ -561,7 +589,7 @@ body.step3 #result {
     text-align: center;
   }
 
-  body.step2 input {
+  body.step2 .input {
     margin-top: 20px;
     padding: 14px;
     font-size: 16px;
@@ -569,19 +597,18 @@ body.step3 #result {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    background-color: #f8f9fa;
   }
 
   body.step2 button {
     max-width: 100%;
   }
 
-  body.step2 input:focus {
+  body.step2 .input:focus {
     background-color: #ffffff;
     border-color: #42b7ff;
   }
 
-  body.step2 button {
+  body.step2 .btn {
     margin-top: 24px;
     padding: 14px 40px;
     font-size: 17px;
@@ -594,10 +621,6 @@ body.step3 #result {
     color: #ffffff;
   }
 
-  body.step2 button:hover {
-    background-color: #3aa3e6;
-  }
-
   /* Step 3: Improved spacing */
   body.step3 .prompt {
     font-size: 18px;
@@ -605,7 +628,7 @@ body.step3 #result {
     text-align: center;
   }
 
-  body.step3 input {
+  body.step3 .input {
     margin-top: 20px;
     padding: 14px;
     font-size: 16px;
@@ -613,19 +636,18 @@ body.step3 #result {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    background-color: #f8f9fa;
   }
 
   body.step3 button {
     max-width: 100%;
   }
 
-  body.step3 input:focus {
+  body.step3 .input:focus {
     background-color: #ffffff;
     border-color: #42b7ff;
   }
 
-  body.step3 button {
+  body.step3 .btn {
     margin-top: 24px;
     padding: 14px 40px;
     font-size: 17px;
@@ -773,22 +795,21 @@ body.step3 #result {
     text-align: center;
   }
 
-  body.step2 input {
+  body.step2 .input {
     font-size: 16px;
     padding: 12px;
     min-height: 44px;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    background-color: #f8f9fa;
   }
 
-  body.step2 input:focus {
+  body.step2 .input:focus {
     background-color: #ffffff;
     border-color: #42b7ff;
   }
 
-  body.step2 button {
+  body.step2 .btn {
     font-size: 16px;
     padding: 12px;
     min-height: 44px;
@@ -798,10 +819,6 @@ body.step3 #result {
     margin-left: auto;
     margin-right: auto;
     color: #ffffff;
-  }
-
-  body.step2 button:hover {
-    background-color: #3aa3e6;
   }
 
   /* Step 3: Scale table further to fit without scroll */
@@ -842,22 +859,21 @@ body.step3 #result {
     text-align: center;
   }
 
-  body.step3 input {
+  body.step3 .input {
     font-size: 16px;
     padding: 12px;
     min-height: 44px;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    background-color: #f8f9fa;
   }
 
-  body.step3 input:focus {
+  body.step3 .input:focus {
     background-color: #ffffff;
     border-color: #42b7ff;
   }
 
-  body.step3 button {
+  body.step3 .btn {
     font-size: 16px;
     padding: 12px;
     min-height: 44px;
@@ -867,10 +883,6 @@ body.step3 #result {
     margin-left: auto;
     margin-right: auto;
     color: #ffffff;
-  }
-
-  body.step3 button:hover {
-    background-color: #3aa3e6;
   }
 
   body.step3 #result {
@@ -920,28 +932,24 @@ body.step3 #result {
     font-size: 11px;
   } 
 
-  body.step2 input {
+  body.step2 .input {
     font-size: 15px;
     padding: 11px;
     min-height: 44px;
     background-color: #f8f9fa;
   }
 
-  body.step2 input:focus {
+  body.step2 .input:focus {
     background-color: #ffffff;
     border-color: #42b7ff;
   }
 
-  body.step2 button {
+  body.step2 .btn {
     font-size: 15px;
     padding: 11px;
     min-height: 44px;
     max-width: 240px;
     color: #ffffff;
-  }
-
-  body.step2 button:hover {
-    background-color: #3aa3e6;
   }
 
   body.step3 .grid-container {
@@ -975,19 +983,19 @@ body.step3 #result {
     background-color: #ffffff;
   } 
 
-  body.step3 input {
+  body.step3 .input {
     font-size: 15px;
     padding: 11px;
     min-height: 44px;
     background-color: #f8f9fa;
   }
 
-  body.step3 input:focus {
+  body.step3 .input:focus {
     background-color: #ffffff;
     border-color: #42b7ff;
   }
 
-  body.step3 button {
+  body.step3 .btn {
     font-size: 15px;
     padding: 11px;
     min-height: 44px;
@@ -1099,5 +1107,63 @@ button.reset-btn:active {
 
 #instructions {
   white-space: pre-line;
+}
+
+/* ===============================
+   Step 3 - Shared responsive cell sizing
+   Ensures row-number labels match grid row heights exactly
+   Uses a CSS variable `--cell-size` and overrides per breakpoint.
+   This block only targets `body.step3` and does not change Step 2 rules.
+   =============================== */
+
+body.step3 {
+  --cell-size: 60px;
+}
+
+/* Apply the shared cell size to the grid and row labels for step3 */
+body.step3 .grid {
+  grid-template-columns: repeat(var(--cols), var(--cell-size));
+}
+
+body.step3 .cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+}
+
+body.step3 .row-numbers {
+  /* make each row-number track the same implicit row sizing as grid cells */
+  grid-auto-rows: var(--cell-size);
+}
+
+/* Responsive adjustments: change only the CSS variable so all related sizes stay in sync */
+@media (max-width: 768px) {
+  body.step3 {
+    --cell-size: 55px;
+  }
+  body.step3 .grid { grid-template-columns: repeat(var(--cols), var(--cell-size)); }
+}
+
+@media (max-width: 480px) {
+  body.step3 {
+    --cell-size: 48px;
+  }
+  body.step3 .grid { grid-template-columns: repeat(var(--cols), var(--cell-size)); }
+  body.step3 .row-numbers { grid-auto-rows: var(--cell-size); }
+}
+
+@media (max-width: 375px) {
+  body.step3 {
+    --cell-size: 40px;
+  }
+  body.step3 .grid { grid-template-columns: repeat(var(--cols), var(--cell-size)); }
+  body.step3 .row-numbers { grid-auto-rows: var(--cell-size); }
+}
+
+@media (max-width: 320px) {
+  body.step3 {
+    --cell-size: 36px;
+  }
+  body.step3 .grid { grid-template-columns: repeat(var(--cols), var(--cell-size)); }
+  body.step3 .row-numbers { grid-auto-rows: var(--cell-size); }
 }
 

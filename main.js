@@ -14,22 +14,11 @@ window.addEventListener("load", () => {
 
   if (!questionEl || !subtextEl || !inputEl || !okBtn) return;
 
-  const questionText = "Ilang letra ang pangalan na naiisip mo?";
-  const subText = "Shhhh... wag mong banggitin yung name ha.";
+  const questionText = "How many letters is the name you're thinking of?";
+  const subText = "Shhhh... don't say the name out loud.";
 
   const maxVal = 15;
   const minVal = 0;
-
-  function typeText(element, text, speed = 40) {
-    element.textContent = "";
-    let i = 0;
-
-    const typing = setInterval(() => {
-      element.textContent += text.charAt(i);
-      i++;
-      if (i === text.length) clearInterval(typing);
-    }, speed);
-  }
 
   // Type question on page load
   window.addEventListener("load", () => {
@@ -66,7 +55,7 @@ window.addEventListener("load", () => {
     const value = Number(inputEl.value);
 
     if (!value || value < 2 || value > 10) {
-      alert("Oopss.. lagay mo yung tamang numbers (2–15).");
+      alert("Oops... enter a valid number (2–15).");
       return;
     }
 
@@ -79,6 +68,157 @@ window.addEventListener("load", () => {
 function getRandomColor() {
   const h = Math.floor(Math.random() * 360);
   return `hsl(${h}, 70%, 35%)`;
+}
+
+// Shared constants & helpers
+const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+function typeText(el, text, speed = 40) {
+  if (!el) return;
+  el.textContent = "";
+  let i = 0;
+  const typing = setInterval(() => {
+    el.textContent += text.charAt(i);
+    i++;
+    if (i === text.length) clearInterval(typing);
+  }, speed);
+}
+
+function formatNumberSequence(inputEl, maxDigits, maxDigitValue) {
+  let digits = inputEl.value.replace(/\D/g, "");
+  let result = [];
+
+  for (let char of digits) {
+    const num = Number(char);
+    if (num >= 1 && num <= maxDigitValue) result.push(num);
+    if (result.length === maxDigits) break;
+  }
+
+  inputEl.value = result.join(" ");
+}
+
+function applyColorsToCells(container) {
+  container.querySelectorAll('.cell').forEach(cell => {
+    cell.style.color = getRandomColor();
+  });
+}
+
+function buildNumberLabels(container, count) {
+  container.innerHTML = '';
+  for (let i = 1; i <= count; i++) {
+    const div = document.createElement('div');
+    div.textContent = i;
+    container.appendChild(div);
+  }
+}
+
+function getRandomLetter() {
+  return ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+}
+
+// UI-only distraction questions (pure UI, no side effects)
+// These questions are purely visual, never stored, and never used by any logic.
+const personalQuestions = [
+  "What is their favorite color?",
+  "What is their favorite food?",
+  "What's their favorite hobby?",
+  "Which city do they like best?",
+  "What's their favorite animal?",
+  "What's their favorite movie?",
+  "What's their favorite season?",
+  "Do they prefer coffee or tea?",
+  "What's their favorite number?",
+  "What's their favorite sport?"
+];
+
+// Show a modal question that intentionally does not affect app state.
+// Returns a Promise that resolves when the user completes the required UI-only answer.
+function showPersonalQuestionModal(question) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.className = 'question-modal';
+
+    overlay.innerHTML = `
+      <div class="modal-content" role="dialog" aria-modal="true">
+        <div class="modal-question">${question}</div>
+        <input class="modal-answer" placeholder="Type your answer (won't be saved)" aria-required="true" maxlength="12" />
+        <div class="validation-message" aria-live="polite"></div>
+        <div class="modal-actions">
+          <button class="modal-continue" disabled>Continue</button>
+        </div>
+      </div>
+    `;
+
+    const MIN_LEN = 1;
+    const MAX_LEN = 12;
+
+    const inputEl = overlay.querySelector('.modal-answer');
+    const continueBtn = overlay.querySelector('.modal-continue');
+    const validationEl = overlay.querySelector('.validation-message');
+
+    function cleanup() {
+      // Remove modal and all listeners
+      if (overlay && overlay.parentNode) document.body.removeChild(overlay);
+      window.removeEventListener('beforeunload', onBeforeUnload);
+      inputEl.removeEventListener('input', onInput);
+      continueBtn.removeEventListener('click', onContinue);
+      document.removeEventListener('keydown', onKey);
+    }
+
+    function onBeforeUnload() {
+      // Ensure modal is removed if page changes; resolve so callers continue
+      cleanup();
+      resolve();
+    }
+
+    function onInput() {
+      // Enforce letters only and max length in real time
+      let filtered = inputEl.value.replace(/[^a-zA-Z]/g, '').slice(0, MAX_LEN);
+      if (filtered !== inputEl.value) {
+        inputEl.value = filtered;
+      }
+
+      if (filtered.length < MIN_LEN) {
+        validationEl.textContent = 'Required — enter letters only (max 12).';
+        continueBtn.disabled = true;
+      } else {
+        validationEl.textContent = '';
+        continueBtn.disabled = false;
+      }
+    }
+
+    function onContinue() {
+      // Do not store or process the answer. This is UI-only.
+      cleanup();
+      resolve();
+    }
+
+    function onKey(e) {
+      if (e.key === 'Enter') {
+        // Only submit if input valid
+        if (!continueBtn.disabled) onContinue();
+      }
+      // Intentionally ignore Escape to prevent skipping
+    }
+
+    // Do not close when clicking outside; only allow completion via Continue
+    overlay.addEventListener('click', (e) => {
+      // clicks outside are ignored intentionally
+      // clicking inside the modal should not propagate to overlay handlers
+      // nothing to do here
+    });
+
+    inputEl.addEventListener('input', onInput);
+    continueBtn.addEventListener('click', onContinue);
+    document.addEventListener('keydown', onKey);
+    window.addEventListener('beforeunload', onBeforeUnload);
+
+    document.body.appendChild(overlay);
+
+    // Focus and initialize validation state
+    inputEl.focus();
+    onInput();
+  });
 }
 
 // STEP 2: Column selection page (step2.html)
@@ -98,24 +238,13 @@ function getRandomColor() {
   const letterCount = Number(localStorage.getItem("letterCount")) || 7;
 
   const instructionText =
-"-spell sa isip ang pangalan\n" +
-"-Column lang ang titingnan\n" +
-"-Hanapin ang bawat letter at piliin ang katumbas na column number\n" +
-"-Dapat sunod-sunod ang pagpili ng number base sa spelling ng name";
+"-Spell the name in your mind\n" +
+"-Only look at Columns\n" +
+"-Find each letter and choose its column number\n" +
+"-Choose numbers in order following the name's spelling";
 
   const promptText = "";
   const subText = "";
-
-  function typeText(el, text, speed = 40) {
-    if (!el) return;
-    el.textContent = "";
-    let i = 0;
-    const typing = setInterval(() => {
-      el.textContent += text.charAt(i);
-      i++;
-      if (i === text.length) clearInterval(typing);
-    }, speed);
-  }
 
   window.addEventListener("load", () => {
     
@@ -139,20 +268,15 @@ function getRandomColor() {
   });
 
   // Build column numbers
-  for (let i = 1; i <= letterCount; i++) {
-    const div = document.createElement("div");
-    div.textContent = i;
-    colNumbers.appendChild(div);
-  }
+  buildNumberLabels(colNumbers, letterCount);
 
   // Build letter grid
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  const alphabet = ALPHABET;
   grid.style.setProperty("--cols", letterCount);
 
-  // Function to get random letter
-  function getRandomLetter() {
-    return alphabet[Math.floor(Math.random() * alphabet.length)];
-  }
+  // Function to get random letter (uses shared helper)
+  // getRandomLetter() is available globally
+
 
 
 
@@ -175,40 +299,33 @@ function getRandomColor() {
   }
 
   // Re-apply colors to every cell as a fallback to ensure none are left uncolored
-  grid.querySelectorAll('.cell').forEach(cell => {
-    cell.style.color = getRandomColor();
-  });
+  applyColorsToCells(grid);
 
   // Input control
-  userInput.addEventListener("input", () => {
-    let digits = userInput.value.replace(/\D/g, "");
-    let result = [];
-
-    for (let char of digits) {
-      const num = Number(char);
-      if (num >= 1 && num <= letterCount) result.push(num);
-      if (result.length === letterCount) break;
-    }
-
-    userInput.value = result.join(" ");
-  });
+  userInput.addEventListener("input", () => formatNumberSequence(userInput, letterCount, letterCount));
 
   // OK (STEP 2)
   okBtn.addEventListener("click", () => {
     if (!userInput.value) {
-      alert("Maglagay ka ng numbers.");
+      alert("Please enter numbers.");
       return;
     }
 
     const values = userInput.value.split(" ").map(Number);
 
     if (values.length !== letterCount) {
-      alert(`Dapat eksaktong ${letterCount} numbers.`);
+      alert(`You must enter exactly ${letterCount} numbers.`);
       return;
     }
 
     localStorage.setItem("columnChoices", JSON.stringify(values));
-    window.location.href = "step3.html";
+
+    // Show UI-only personal question (purely visual; no state changes)
+    const q = personalQuestions[Math.floor(Math.random() * personalQuestions.length)];
+    showPersonalQuestionModal(q).then(() => {
+      // After user dismisses the question, proceed to Step 3
+      window.location.href = "step3.html";
+    });
   });
 })();
 
@@ -227,7 +344,7 @@ function getRandomColor() {
 
   const letterCount = Number(localStorage.getItem("letterCount"));
   const columnChoices = JSON.parse(localStorage.getItem("columnChoices"));
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  const alphabet = ALPHABET;
     const usedLetters = new Set(alphabet);
 
   // Function to get random letter
@@ -268,22 +385,11 @@ function getSafeRandomLetter() {
 
   // Display instruction text above table with typing effect
    const instructionText =
-"-spell ulit sa isip ang pangalan.\n" +
-"-Row lang ang titingnan.\n" +
-"-Hanapin ang bawat letter, piliin ang katumbas na column number.\n" +
-"-In order sa spell ng name.";
+"-Spell the name in your mind again.\n" +
+"-Only look at Rows.\n" +
+"-Find each letter and choose the corresponding column number.\n" +
+"-In order of the name's spelling.";
   
-  function typeText(el, text, speed = 40) {
-    if (!el) return;
-    el.textContent = "";
-    let i = 0;
-    const typing = setInterval(() => {
-      el.textContent += text.charAt(i);
-      i++;
-      if (i === text.length) clearInterval(typing);
-    }, speed);
-  }
-
   window.addEventListener("load", () => {
     // Display instruction above table
     if (tableInstructionEl && instructionText) {
@@ -296,11 +402,7 @@ function getSafeRandomLetter() {
   });
 
   // Build row numbers
-  letterTable.forEach((_, i) => {
-    const div = document.createElement("div");
-    div.textContent = i + 1;
-    rowNumbers.appendChild(div);
-  });
+  buildNumberLabels(rowNumbers, letterTable.length);
 
   // Build grid
   grid.style.setProperty("--cols", letterCount);
@@ -317,41 +419,32 @@ function getSafeRandomLetter() {
   });
 
   // Re-apply colors to every cell as a fallback to ensure none are left uncolored
-  grid.querySelectorAll('.cell').forEach(cell => {
-    cell.style.color = getRandomColor();
-  });
+  applyColorsToCells(grid);
 
   // Input control
-  rowInput.addEventListener("input", () => {
-    let digits = rowInput.value.replace(/\D/g, "");
-    let result = [];
-
-    for (let d of digits) {
-      const n = Number(d);
-      if (n >= 1 && n <= letterTable.length) result.push(n);
-      if (result.length === letterCount) break;
-    }
-
-    rowInput.value = result.join(" ");
-  });
+  rowInput.addEventListener("input", () => formatNumberSequence(rowInput, letterCount, letterTable.length));
 
   // Final OK
   okBtn.addEventListener("click", () => {
     const picks = rowInput.value.split(" ").map(Number);
 
     if (picks.length !== letterCount) {
-      alert(`Dapat eksaktong ${letterCount} numbers.`);
+      alert(`You must enter exactly ${letterCount} numbers.`);
       return;
     }
 
-    loading.style.display = "block";
-    loading.textContent = "Binabasa ang isip mo...";
+    // Show UI-only personal question (purely visual; no state changes)
+    const q = personalQuestions[Math.floor(Math.random() * personalQuestions.length)];
+    showPersonalQuestionModal(q).then(() => {
+      loading.style.display = "block";
+      loading.textContent = "Reading your mind...";
 
-    setTimeout(() => {
-      loading.style.display = "none";
-      resultEl.style.display = "block";
-      resultEl.textContent = getFinalName(picks);
-    }, 3000);
+      setTimeout(() => {
+        loading.style.display = "none";
+        resultEl.style.display = "block";
+        resultEl.textContent = getFinalName(picks);
+      }, 3000);
+    });
   });
 
   // Core magic
@@ -371,7 +464,7 @@ const resetBtn = document.getElementById("resetBtn");
 
 if (resetBtn) {
   resetBtn.addEventListener("click", () => {
-    if (!confirm("Uulitin mo ba mula simula?")) return;
+      if (!confirm("Do you want to start over from the beginning?")) return;
 
     // nice exit animation
     document.body.style.transition = "opacity 0.4s ease";
