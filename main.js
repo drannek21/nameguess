@@ -141,7 +141,7 @@ function showPersonalQuestionModal(question) {
     overlay.innerHTML = `
       <div class="modal-content" role="dialog" aria-modal="true">
         <div class="modal-question">${question}</div>
-        <input class="modal-answer" placeholder="Type your answer (won't be saved)" aria-required="true" maxlength="12" />
+        <input class="modal-answer" placeholder="Type your answer" aria-required="true" maxlength="12" />
         <div class="validation-message" aria-live="polite"></div>
         <div class="modal-actions">
           <button class="modal-continue" disabled>Continue</button>
