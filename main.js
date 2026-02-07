@@ -14,8 +14,8 @@ window.addEventListener("load", () => {
 
   if (!questionEl || !subtextEl || !inputEl || !okBtn) return;
 
-  const questionText = "How many letters is the name you're thinking of?";
-  const subText = "Shhhh... don't say the name out loud.";
+  const questionText = "Ilang letters yung name na iniisip mo?";
+  const subText = "Short name lang nya ha";
 
   const maxVal = 15;
   const minVal = 0;
@@ -54,7 +54,7 @@ window.addEventListener("load", () => {
   okBtn.addEventListener("click", () => {
     const value = Number(inputEl.value);
 
-    if (!value || value < 2 || value > 10) {
+    if (!value || value < 2 || value > 15) {
       alert("Oops... enter a valid number (2–15).");
       return;
     }
@@ -127,7 +127,6 @@ const personalQuestions = [
   "What's their favorite movie?",
   "What's their favorite season?",
   "Do they prefer coffee or tea?",
-  "What's their favorite number?",
   "What's their favorite sport?"
 ];
 
@@ -179,7 +178,7 @@ function showPersonalQuestionModal(question) {
       }
 
       if (filtered.length < MIN_LEN) {
-        validationEl.textContent = 'Required — enter letters only (max 12).';
+
         continueBtn.disabled = true;
       } else {
         validationEl.textContent = '';
@@ -228,20 +227,20 @@ function showPersonalQuestionModal(question) {
   const tableInstructionEl = document.getElementById("tableInstruction");
   const userInput = document.getElementById("userInput");
   const okBtn = document.getElementById("okBtn");
+  const eraseBtn = document.getElementById("selectedEraseBtn");
   const colNumbers = document.getElementById("colNumbers");
   const grid = document.getElementById("letterGrid");
-  
+  const selectedDisplay = document.getElementById("selectedDisplay");
 
-  if (!promptEl || !subpromptEl || !userInput || !okBtn || !colNumbers || !grid) return;
+  if (!promptEl || !subpromptEl || !userInput || !okBtn || !colNumbers || !grid || !selectedDisplay) return;
 
   // Get value from first page
   const letterCount = Number(localStorage.getItem("letterCount")) || 7;
+  let selectedColumns = [];
 
   const instructionText =
-"-Spell the name in your mind\n" +
-"-Only look at Columns\n" +
-"-Find each letter and choose its column number\n" +
-"-Choose numbers in order following the name's spelling";
+"Isipin mo yung name.\n" +
+"Sa COLUMNS lang tumingin — piliin ang number ng bawat letter, sunod ng spelling.";
 
   const promptText = "";
   const subText = "";
@@ -267,8 +266,31 @@ function showPersonalQuestionModal(question) {
     }
   });
 
-  // Build column numbers
-  buildNumberLabels(colNumbers, letterCount);
+  // Build column numbers with click handlers
+  colNumbers.innerHTML = '';
+  for (let i = 1; i <= letterCount; i++) {
+    const div = document.createElement('div');
+    div.textContent = i;
+    div.className = 'step2-number-label';
+    div.addEventListener('click', () => {
+      if (selectedColumns.length < letterCount) {
+        selectedColumns.push(i);
+        updateDisplay();
+      }
+    });
+    colNumbers.appendChild(div);
+  }
+
+  function updateDisplay() {
+    if (selectedColumns.length === 0) {
+      selectedDisplay.textContent = 'None';
+      selectedDisplay.className = 'selected-numbers';
+    } else {
+      selectedDisplay.textContent = selectedColumns.join(' ');
+      selectedDisplay.className = 'selected-numbers active';
+    }
+    if (eraseBtn) eraseBtn.disabled = selectedColumns.length === 0;
+  }
 
   // Build letter grid
   const alphabet = ALPHABET;
@@ -301,24 +323,33 @@ function showPersonalQuestionModal(question) {
   // Re-apply colors to every cell as a fallback to ensure none are left uncolored
   applyColorsToCells(grid);
 
-  // Input control
+  // Input control (fallback for typing)
   userInput.addEventListener("input", () => formatNumberSequence(userInput, letterCount, letterCount));
+
+  // Erase last selection (inside selected display)
+  if (eraseBtn) {
+    eraseBtn.addEventListener("click", () => {
+      if (selectedColumns.length > 0) {
+        selectedColumns.pop();
+        updateDisplay();
+      }
+    });
+    updateDisplay();
+  }
 
   // OK (STEP 2)
   okBtn.addEventListener("click", () => {
-    if (!userInput.value) {
-      alert("Please enter numbers.");
+    if (selectedColumns.length === 0) {
+      alert("Please select column numbers.");
       return;
     }
 
-    const values = userInput.value.split(" ").map(Number);
-
-    if (values.length !== letterCount) {
-      alert(`You must enter exactly ${letterCount} numbers.`);
+    if (selectedColumns.length !== letterCount) {
+      alert(`You must select exactly ${letterCount} numbers.`);
       return;
     }
 
-    localStorage.setItem("columnChoices", JSON.stringify(values));
+    localStorage.setItem("columnChoices", JSON.stringify(selectedColumns));
 
     // Show UI-only personal question (purely visual; no state changes)
     const q = personalQuestions[Math.floor(Math.random() * personalQuestions.length)];
@@ -335,17 +366,19 @@ function showPersonalQuestionModal(question) {
   const rowNumbers = document.getElementById("rowNumbers");
   const grid = document.getElementById("letterGrid");
   const okBtn = document.getElementById("okBtn");
+  const eraseBtn = document.getElementById("selectedEraseBtn");
   const loading = document.getElementById("loading");
-  const resultEl = document.getElementById("result");
   const promptEl = document.getElementById("prompt");
   const tableInstructionEl = document.getElementById("tableInstruction");
+  const selectedDisplay = document.getElementById("selectedDisplay");
 
-  if (!rowInput || !rowNumbers || !grid || !okBtn || !loading || !resultEl) return;
+  if (!rowInput || !rowNumbers || !grid || !okBtn || !loading || !selectedDisplay) return;
 
   const letterCount = Number(localStorage.getItem("letterCount"));
   const columnChoices = JSON.parse(localStorage.getItem("columnChoices"));
   const alphabet = ALPHABET;
-    const usedLetters = new Set(alphabet);
+  const usedLetters = new Set(alphabet);
+  let selectedRows = [];
 
   // Function to get random letter
 function getSafeRandomLetter() {
@@ -384,11 +417,9 @@ function getSafeRandomLetter() {
   const letterTable = buildTable();
 
   // Display instruction text above table with typing effect
-   const instructionText =
-"-Spell the name in your mind again.\n" +
-"-Only look at Rows.\n" +
-"-Find each letter and choose the corresponding column number.\n" +
-"-In order of the name's spelling.";
+  const instructionText =
+"Isipin ulit yung name.\n" +
+"Sa ROWS lang tumingin — piliin ang number ng bawat letter, sunod ng spelling.";
   
   window.addEventListener("load", () => {
     // Display instruction above table
@@ -401,8 +432,31 @@ function getSafeRandomLetter() {
     }
   });
 
-  // Build row numbers
-  buildNumberLabels(rowNumbers, letterTable.length);
+  // Build row numbers with click handlers
+  rowNumbers.innerHTML = '';
+  for (let i = 1; i <= letterTable.length; i++) {
+    const div = document.createElement('div');
+    div.textContent = i;
+    div.className = 'step3-number-label';
+    div.addEventListener('click', () => {
+      if (selectedRows.length < letterCount) {
+        selectedRows.push(i);
+        updateDisplay();
+      }
+    });
+    rowNumbers.appendChild(div);
+  }
+
+  function updateDisplay() {
+    if (selectedRows.length === 0) {
+      selectedDisplay.textContent = 'None';
+      selectedDisplay.className = 'selected-numbers';
+    } else {
+      selectedDisplay.textContent = selectedRows.join(' ');
+      selectedDisplay.className = 'selected-numbers active';
+    }
+    if (eraseBtn) eraseBtn.disabled = selectedRows.length === 0;
+  }
 
   // Build grid
   grid.style.setProperty("--cols", letterCount);
@@ -421,15 +475,97 @@ function getSafeRandomLetter() {
   // Re-apply colors to every cell as a fallback to ensure none are left uncolored
   applyColorsToCells(grid);
 
-  // Input control
+  // Input control (fallback for typing)
   rowInput.addEventListener("input", () => formatNumberSequence(rowInput, letterCount, letterTable.length));
+
+  // Erase last selection (inside selected display)
+  if (eraseBtn) {
+    eraseBtn.addEventListener("click", () => {
+      if (selectedRows.length > 0) {
+        selectedRows.pop();
+        updateDisplay();
+      }
+    });
+    updateDisplay();
+  }
+
+  // Random fun messages to show with the revealed name
+  const nameRevealMessages = [
+    "Yiieeeee, crush mo sya no! 💕",
+    "Aba, may lihim na feelings! 😏",
+    "Kilig much? Haha! 🤭",
+    "Sino ba naman ang hindi ma-fall dyan! ✨",
+    "Secret no more — alam na namin! 😄",
+    "Tama na, amin na! Crush mo yan! 💘",
+    "Ang sweet ng name na yan, no? 🌸",
+    "Baka naman i-confess mo na? 😂",
+    "Naku, nahanap na namin ang nasa isip mo! 🎯",
+    "Shhh... we won't tell! (charot, sabi na nga eh) 😜",
+    "That name tho! 👀",
+    "Mystery solved! Case closed. 🔍",
+    "Ayan na, na-reveal na! No take backs! 🎉",
+    "Kilig meter: 100% 📈",
+    "Sana all may ganitong name sa isip! 💭"
+  ];
+
+  function showNameRevealPopup(name) {
+    const message = nameRevealMessages[Math.floor(Math.random() * nameRevealMessages.length)];
+    const overlay = document.createElement("div");
+    overlay.className = "result-popup-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", "Name revealed");
+
+    overlay.innerHTML = `
+      <div class="result-popup">
+        <p class="result-popup-message">${message}</p>
+        <p class="result-popup-name">${name}</p>
+        <button type="button" class="btn result-popup-back">← Back to Start</button>
+      </div>
+    `;
+
+    const backBtn = overlay.querySelector(".result-popup-back");
+    backBtn.addEventListener("click", () => {
+      document.body.removeChild(overlay);
+      localStorage.clear();
+      window.location.href = "index.html";
+    });
+
+    document.body.appendChild(overlay);
+
+    // Confetti when popup appears
+    if (window.confetti) {
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+      setTimeout(() => {
+        confetti({
+          particleCount: 60,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 }
+        });
+        confetti({
+          particleCount: 60,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 }
+        });
+      }, 250);
+    }
+  }
 
   // Final OK
   okBtn.addEventListener("click", () => {
-    const picks = rowInput.value.split(" ").map(Number);
+    if (selectedRows.length === 0) {
+      alert("Please select row numbers.");
+      return;
+    }
 
-    if (picks.length !== letterCount) {
-      alert(`You must enter exactly ${letterCount} numbers.`);
+    if (selectedRows.length !== letterCount) {
+      alert(`You must select exactly ${letterCount} numbers.`);
       return;
     }
 
@@ -441,8 +577,11 @@ function getSafeRandomLetter() {
 
       setTimeout(() => {
         loading.style.display = "none";
-        resultEl.style.display = "block";
-        resultEl.textContent = getFinalName(picks);
+        const finalName = getFinalName(selectedRows);
+        okBtn.disabled = true;
+        okBtn.style.opacity = "0.5";
+        okBtn.style.cursor = "not-allowed";
+        showNameRevealPopup(finalName);
       }, 3000);
     });
   });

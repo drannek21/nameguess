@@ -3,22 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <title>NAMEGUESS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="step1">
   <h1>NAMEGUESS</h1>
+  <p class="step1-tagline">Guess the name you're thinking of</p>
 
   <div class="container">
     <div class="question" id="question"></div>
 
     <div class="input-box">
-      <input class="input" type="number" id="letterInput"/>
+      <input class="input" type="number" id="letterInput" placeholder="2–15" min="2" max="15" inputmode="numeric" aria-label="Number of letters">
     </div>
 
     <div class="subtext" id="subtext"></div>
 
-    <button id="okBtn" class="btn">OK</button>
+    <button id="okBtn" class="btn" type="button">OK</button>
   </div>
 
   <script src="main.js"></script>

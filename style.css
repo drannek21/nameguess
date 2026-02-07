@@ -1,31 +1,27 @@
 /* ===============================
-   Base layout (shared)
+   Base layout (shared) — modern UI
    =============================== */
 
 body {
-  background-color: #e5e5f7;
+  background: linear-gradient(160deg, #f0f4ff 0%, #e8ecf7 50%, #e2e8f0 100%);
   opacity: 0;
-  background-size: 24px 24px;
-  background-image: repeating-linear-gradient(
-    0deg,
-    #444cf7,
-    #444cf7 1.2000000000000002px,
-    #e5e5f7 1.2000000000000002px,
-    #e5e5f7
-  );
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   margin: 0;
   padding: 0;
   transition: opacity 0.35s ease-in-out;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
 body.page-loaded {
-  opacity: 0.8;
+  opacity: 1;
 }
 
 h1 {
-  letter-spacing: 2px;
+  letter-spacing: 0.05em;
   text-align: center;
+  font-weight: 700;
+  color: #1a1d2e;
 }
 
 /* ===============================
@@ -34,111 +30,180 @@ h1 {
 
 body.step1 {
   text-align: center;
-}
-
-.box {
-  background-color: #bb4949;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 body.step1 h1 {
-  margin-top: 40px;
+  margin: 0;
+  margin-top: 32px;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #1a1d2e;
+}
+
+.step1-tagline {
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+  color: #64748b;
+  font-weight: 500;
 }
 
 .container {
-  margin-top: 80px;
+  margin-top: 28px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.question {
-  font-size: 20px;
-  font-weight: bold;
-  min-height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 0;
-  margin-bottom: 10px;
-  /* Allow typed text to render line breaks (\n) */
-  white-space: pre-line;
-}
-
-.subtext {
-  margin-top: 10px;
-  color: #666;
-  min-height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5px 0;
-  margin-bottom: 10px;
-  /* Allow typed text to render line breaks (\n) */
-  white-space: pre-line;
-}
-
-.input-box {
-  margin-top: 15px;
-  margin-bottom: 10px;
-}
-
-/* Shared input/button styles */
-.input {
-  padding: 12px;
-  font-size: 16px;
-  text-align: center;
-  border-radius: 20px;
-  border: 2px solid #b3e5f2;
-  outline: none;
-  background-color: #f8f9fa;
-  box-sizing: border-box;
-}
-
-.input:focus {
-  background-color: #ffffff;
-  border-color: #42b7ff;
-}
-
-.btn {
-  margin-top: 15px;
-  padding: 12px 40px;
-  font-size: 16px;
-  border-radius: 25px;
-  border: none;
-  background: #42b7ff;
-  color: #ffffff;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-.btn:hover { background-color: #3aa3e6; }
-.btn:active { transform: scale(0.98); }
-
-/* Step1 overrides */
-body.step1 .input {
-  width: 120px;
-  font-size: 18px;
-}
-
-body.step1 .btn {
-  color: #000;
-  font-size: 18px;
-  display: block;
+  background: #fff;
+  padding: 1.75rem 2rem;
+  border-radius: 24px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  max-width: 400px;
   margin-left: auto;
   margin-right: auto;
 }
 
+.question {
+  font-size: 1.15rem;
+  font-weight: 600;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+  margin-bottom: 2px;
+  color: #1e293b;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.subtext {
+  margin-top: 4px;
+  color: #64748b;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+  margin-bottom: 2px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.input-box {
+  margin: 10px 0 4px;
+}
+
+/* Shared input/button styles — modern */
+.input {
+  padding: 14px 18px;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 14px;
+  border: 1px solid #dde2ec;
+  outline: none;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus {
+  border-color: #5b7cff;
+  box-shadow: 0 0 0 3px rgba(91, 124, 255, 0.2);
+}
+
+.btn {
+  margin-top: 15px;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(180deg, #5b7cff 0%, #4a6bf5 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(91, 124, 255, 0.35);
+}
+
+.btn:hover {
+  box-shadow: 0 6px 20px rgba(91, 124, 255, 0.45);
+  transform: translateY(-1px);
+}
+.btn:active { transform: scale(0.98); }
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn:disabled:hover {
+  box-shadow: 0 4px 14px rgba(91, 124, 255, 0.35);
+  transform: none;
+}
+
+/* Secondary button (Clear) */
+.btn-secondary {
+  background: linear-gradient(180deg, #a0aec0 0%, #8fa3b8 100%);
+  box-shadow: 0 4px 14px rgba(160, 174, 192, 0.35);
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.btn-secondary:hover {
+  box-shadow: 0 6px 20px rgba(160, 174, 192, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Step1 overrides */
+body.step1 .input {
+  width: 140px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+body.step1 .input::placeholder {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+body.step1 .btn {
+  color: #fff;
+  font-size: 1.05rem;
+  padding: 16px 40px;
+  margin-top: 16px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 16px;
+}
+
 body.step1 .btn:hover {
-  opacity: 0.9;
+  opacity: 0.95;
+  color: #fff;
 } 
 
 /* ===============================
    Step 2 (step2.html)
    =============================== */
 
+body.step2 {
+  --cell-size: 48px;
+}
+
 body.step2 h1 {
   margin-top: 30px;
+  font-size: 1.6rem;
+  color: #1a1d2e;
 }
 
 body.step2 .wrapper {
@@ -185,17 +250,94 @@ body.step2 .grid-container {
   text-align: center;
 }
 
-body.step2 .numbers {
+.step2-numbers {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 60px;
+  grid-auto-columns: var(--cell-size);
   gap: 0;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  justify-content: center;
 } 
 
-body.step2 .numbers div {
+.step2-numbers div {
   font-weight: bold;
   color: #000;
+}
+
+/* Clickable number labels for step2 and step3 */
+.number-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #000;
+}
+
+/* Step 2: Column number labels — same size as cells for alignment */
+.step2-number-label {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  user-select: none;
+  background: linear-gradient(180deg, #e8f0ff 0%, #d4e4ff 100%);
+  border: 2px solid #5b7cff;
+  color: #5b7cff;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step2-number-label:hover {
+  background: linear-gradient(180deg, #5b7cff 0%, #4a6bf5 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(91, 124, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.step2-number-label:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(91, 124, 255, 0.3);
+}
+
+/* Step 3: Row number labels — same size as cells for alignment */
+.step3-number-label {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  user-select: none;
+  background: linear-gradient(180deg, #e8f0ff 0%, #d4e4ff 100%);
+  border: 2px solid #5b7cff;
+  color: #5b7cff;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step3-number-label:hover {
+  background: linear-gradient(180deg, #5b7cff 0%, #4a6bf5 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(91, 124, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.step3-number-label:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(91, 124, 255, 0.3);
 }
 
 /* Row number labels */
@@ -208,7 +350,7 @@ body.step3 .row-numbers div {
 body.step2 .grid,
 body.step3 .grid {
   display: grid;
-  grid-template-columns: repeat(var(--cols), 60px);
+  grid-template-columns: repeat(var(--cols), var(--cell-size));
   border: none;
 } 
 
@@ -220,25 +362,27 @@ body.step3 .cell {
   justify-content: center;
   font-weight: bold;
   font-size: 16px;
-  width: 60px;
-  height: 60px;
+  width: var(--cell-size);
+  height: var(--cell-size);
   box-sizing: border-box;
 } 
 
-/* Step 2: Visible vertical lines only (column separators) - thicker RED lines */
+/* Step 2: Visible vertical lines only (column separators) */
 body.step2 .grid {
   border: none;
-  background-color: #f5f7fa;
-  padding: 4px;
-  border-radius: 4px;
+  background-color: #fff;
+  padding: 6px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 body.step2 .cell {
   border-left: none;
-  border-right: 3px solid #e74c3c;
+  border-right: 2px solid #ff6b6b;
   border-top: none;
   border-bottom: none;
-  background-color: #fffff1;
+  background-color: #fff;
+  color: #2d3142;
 }
 
 /* Remove right border from last column cells (handled dynamically via JS or accept it) */
@@ -246,30 +390,36 @@ body.step2 .grid-container {
   overflow: visible;
 }
 
-/* Step 3: Visible horizontal lines only (row separators) - thicker RED lines */
+/* Step 3: Visible horizontal lines only (row separators) */
 body.step3 .grid {
   border: none;
-  background-color: #f5f7fa;
-  padding: 4px;
-  border-radius: 4px;
+  background-color: #fff;
+  padding: 6px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 body.step3 .cell {
   border-left: none;
   border-right: none;
   border-top: none;
-  border-bottom: 3px solid #e74c3c;
-  background-color: #ffffff;
+  border-bottom: 2px solid #ff6b6b;
+  background-color: #fff;
+  color: #2d3142;
 }
 
 body.step2 .right {
-  max-width: 300px;
+  max-width: 320px;
   min-width: 280px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
 }
 
 body.step2 .prompt {
@@ -295,6 +445,85 @@ body.step2 .subprompt {
   padding: 5px 0;
 }
 
+/* Selected display */
+.selected-display {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: #f7fafc;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  width: 100%;
+  max-width: 280px;
+  box-sizing: border-box;
+}
+
+.selected-display label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #5c6370;
+  margin-bottom: 6px;
+}
+
+.selected-display-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+}
+
+.selected-numbers {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #cbd5e0;
+  letter-spacing: 0.05em;
+  word-spacing: 0.2em;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.selected-numbers.active {
+  color: #5b7cff;
+  border-color: #5b7cff;
+}
+
+.selected-erase-btn {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: #e2e8f0;
+  color: #64748b;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.selected-erase-btn:hover:not(:disabled) {
+  background: #cbd5e1;
+  color: #475569;
+}
+
+.selected-erase-btn:active:not(:disabled) {
+  background: #94a3b8;
+  color: #fff;
+}
+
+.selected-erase-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 body.step2 .input {
   width: 100%;
   max-width: 280px;
@@ -305,6 +534,11 @@ body.step2 .right .btn {
   margin-top: 30px;
   width: 100%;
   max-width: 280px;
+}
+
+body.step2 .right .btn-secondary {
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 /* Hover/active handled by .btn */
@@ -319,6 +553,8 @@ body.step3 {
 
 body.step3 h1 {
   margin-top: 30px;
+  font-size: 1.6rem;
+  color: #1a1d2e;
 }
 
 body.step3 .wrapper {
@@ -343,12 +579,12 @@ body.step3 .table-section {
 }
 
 body.step3 .table-instruction {
-  font-weight: bold;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 0.95rem;
   text-align: center;
   margin-bottom: 16px;
   padding: 12px 10px;
-  color: #333;
+  color: #3d4259;
   line-height: 1.5;
   min-height: 80px;
   display: flex;
@@ -356,22 +592,22 @@ body.step3 .table-instruction {
   justify-content: center;
   width: 100%;
   box-sizing: border-box;
-  /* Preserve newline characters (\n) so typed text can break lines */
   white-space: pre-line;
-  /* Allow long words to wrap if necessary */
   overflow-wrap: anywhere;
 } 
 
 body.step3 .grid-container {
   display: flex;
-  gap: 5px;
+  gap: 0px;
 }
 
 body.step3 .row-numbers {
   display: grid;
-  grid-auto-rows: 50px;
-  margin-right: 15px;
+  grid-auto-rows: var(--cell-size);
+  gap: 0;
+  margin-right: 8px;
   font-weight: bold;
+  justify-items: center;
 }
 
 body.step3 .row-numbers div {
@@ -382,20 +618,25 @@ body.step3 .row-numbers div {
 
 /* RIGHT SIDE */
 body.step3 .right {
-  max-width: 300px;
+  max-width: 320px;
   min-width: 280px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
 }
 
 /* Modal used for UI-only personal questions (no side-effects) */
 .question-modal {
   position: fixed;
   inset: 0;
-  background: rgba(12, 12, 20, 0.6);
+  background: rgba(26, 29, 46, 0.5);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -404,26 +645,27 @@ body.step3 .right {
 }
 
 .question-modal .modal-content {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
+  background: #fff;
+  padding: 24px;
+  border-radius: 16px;
   max-width: 520px;
   width: 100%;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
   text-align: center;
 }
 
 .question-modal .modal-question {
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 12px;
-  font-size: 18px;
+  font-size: 1.1rem;
+  color: #2d3142;
 }
 
 .question-modal .modal-answer {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 2px solid #e8e8ef;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #dde2ec;
   margin-bottom: 12px;
   box-sizing: border-box;
 }
@@ -435,19 +677,26 @@ body.step3 .right {
 }
 
 .question-modal .modal-actions button {
-  padding: 10px 16px;
-  border-radius: 20px;
+  padding: 12px 20px;
+  border-radius: 14px;
   border: none;
   cursor: pointer;
-  background: #42b7ff;
+  font-weight: 600;
+  background: linear-gradient(180deg, #5b7cff 0%, #4a6bf5 100%);
   color: #fff;
+  box-shadow: 0 4px 14px rgba(91, 124, 255, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.question-modal .modal-actions button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(91, 124, 255, 0.45);
 }
 
 .question-modal .validation-message {
-  color: #c0392b;
+  color: #e53e3e;
   margin-bottom: 8px;
   min-height: 18px;
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
 .question-modal .modal-actions button[disabled] {
@@ -465,7 +714,53 @@ body.step3 .prompt {
   padding: 5px 0;
   /* Allow typed text to render line breaks (\n) */
   white-space: pre-line;
-} 
+}
+
+/* Selected display for step3 */
+body.step3 .selected-display {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: #f7fafc;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  width: 100%;
+  max-width: 280px;
+  box-sizing: border-box;
+}
+
+body.step3 .selected-display label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #5c6370;
+  margin-bottom: 6px;
+}
+
+body.step3 .selected-display-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+}
+
+body.step3 .selected-numbers {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #cbd5e0;
+  letter-spacing: 0.05em;
+  word-spacing: 0.2em;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+body.step3 .selected-numbers.active {
+  color: #5b7cff;
+  border-color: #5b7cff;
+}
 
 body.step3 .input {
   width: 100%;
@@ -479,21 +774,86 @@ body.step3 .right .btn {
   max-width: 280px;
 }
 
+body.step3 .right .btn-secondary {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
 /* Hover/active handled by .btn */
 
 body.step3 #loading {
   display: none;
   margin-top: 30px;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #5b7cff;
 }
 
-body.step3 #result {
-  display: none;
-  margin-top: 40px;
-  font-size: 40px;
-  letter-spacing: 5px;
-  font-weight: bold;
+/* Result popup (step 3 – name reveal with confetti) */
+.result-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 29, 46, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: resultPopupFadeIn 0.35s ease-out;
+}
+
+@keyframes resultPopupFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.result-popup {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 380px;
+  width: 100%;
+  animation: resultPopupScaleIn 0.4s ease-out;
+}
+
+@keyframes resultPopupScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.result-popup-message {
+  font-size: 1.05rem;
+  color: #5c6370;
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+
+.result-popup-name {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #1a1d2e;
+  margin: 0 0 1.5rem;
+  padding: 0.5rem 0;
+}
+
+.result-popup-back {
+  width: 100%;
+  margin-top: 0;
+  font-size: 1rem;
 }
 
 /* ===============================
@@ -502,39 +862,76 @@ body.step3 #result {
 
 @media (max-width: 768px) {
   body {
-    background-size: 18px 18px;
+    background: linear-gradient(160deg, #f0f4ff 0%, #e8ecf7 70%, #e2e8f0 100%);
   }
 
-  /* Step 1 */
+  /* Responsive number labels */
+  .step2-number-label {
+    font-size: 0.95rem;
+  }
+
+  .step3-number-label {
+    font-size: 0.95rem;
+  }
+
+  /* Responsive selected display */
+  .selected-display {
+    font-size: 0.95rem;
+    padding: 10px 12px;
+  }
+
+  .selected-numbers {
+    font-size: 1rem;
+  }
+
+  /* Step 1 — compact for mobile so OK button is visible without scroll */
+  body.step1 {
+    padding: 0 12px;
+  }
+
   body.step1 h1 {
-    margin-top: 24px;
-    font-size: 24px;
+    margin-top: 20px;
+    font-size: 1.6rem;
+  }
+
+  .step1-tagline {
+    font-size: 0.85rem;
+    margin-top: 2px;
   }
 
   .container {
-    margin-top: 60px;
-    padding: 0 16px;
+    margin-top: 16px;
+    padding: 1.15rem 1.25rem;
+    border-radius: 20px;
   }
 
   .question {
-    font-size: 18px;
-    min-height: 70px;
-    padding: 8px 0;
+    font-size: 1rem;
+    min-height: 48px;
+    padding: 4px 0;
+    margin-bottom: 0;
   }
 
   .subtext {
-    font-size: 14px;
-    min-height: 60px;
-    padding: 5px 0;
+    font-size: 0.8rem;
+    min-height: 36px;
+    padding: 2px 0;
+    margin-top: 2px;
+  }
+
+  .input-box {
+    margin: 8px 0 2px;
   }
 
   body.step1 .input {
-    width: 160px;
+    width: 140px;
   }
 
   body.step1 .btn {
     width: 100%;
-    max-width: 260px;
+    max-width: 280px;
+    padding: 14px 24px;
+    margin-top: 12px;
   }
 
   /* Shared wrapper adjustments for step2 & step3 */
@@ -543,8 +940,7 @@ body.step3 #result {
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    padding: 16px;
-    margin-top: 30px;
+    padding: 5px;
     max-width: 100%;
     justify-content: center;
   }
@@ -668,36 +1064,29 @@ body.step3 #result {
   body.step2 .grid-container {
     width: 100%;
     max-width: 100%;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: visible;
   }
 
-  body.step2 .numbers {
-    max-width: 100%;
-    overflow-x: visible;
-  }
-
   body.step2 .grid {
     margin: 0 auto;
     max-width: calc(100vw - 40px);
+    min-width: 0;
     overflow: hidden;
-    grid-template-columns: repeat(var(--cols), 55px);
+    grid-template-columns: repeat(var(--cols), var(--cell-size));
     background-color: #f5f7fa;
     padding: 3px;
   } 
 
   body.step2 .cell {
-    width: 55px;
-    height: 55px;
+    width: var(--cell-size);
+    height: var(--cell-size);
     font-size: 15px;
     border-right: 3px solid #e74c3c;
     background-color: #ffffff;
-  } 
-
-  body.step2 .numbers {
-    grid-auto-columns: 55px;
   } 
 
   /* Step 3: Scale table to fit without horizontal scroll */
@@ -710,29 +1099,18 @@ body.step3 #result {
     flex-wrap: nowrap;
   }
 
-  body.step3 .row-numbers {
-    margin-right: 8px;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-
-  body.step3 .row-numbers div {
-    min-width: 28px;
-    font-size: 14px;
-  }
-
   body.step3 .grid {
     margin: 0;
     max-width: calc(100vw - 80px);
     overflow: hidden;
-    grid-template-columns: repeat(var(--cols), 55px);
+    grid-template-columns: repeat(var(--cols), var(--cell-size));
     background-color: #f5f7fa;
     padding: 3px;
   } 
 
   body.step3 .cell {
-    width: 55px;
-    height: 55px;
+    width: var(--cell-size);
+    height: var(--cell-size);
     font-size: 15px;
     border-bottom: 3px solid #e74c3c;
     background-color: #ffffff;
@@ -766,22 +1144,45 @@ body.step3 #result {
   /* Step 2: Smaller table cells */
   body.step2 .grid {
     max-width: calc(100vw - 30px);
-    grid-template-columns: repeat(var(--cols), 48px);
+    grid-template-columns: repeat(var(--cols), var(--cell-size));
     background-color: #f5f7fa;
     padding: 3px;
   } 
 
   body.step2 .cell {
-    width: 48px;
-    height: 48px;
+    width: var(--cell-size);
+    height: var(--cell-size);
     font-size: 13px;
     border-right: 3px solid #e74c3c;
     background-color: #ffffff;
   } 
 
-  body.step2 .numbers {
-    grid-auto-columns: 48px;
+  .step2-numbers {
+    grid-auto-columns: var(--cell-size);
     font-size: 12px;
+    gap: 0;
+    margin-bottom: 18px;
+    margin-top: 8px;
+  }
+
+  /* Responsive number labels for smaller screens */
+  .step2-number-label {
+    font-size: 0.9rem;
+  }
+
+  .step3-number-label {
+    font-size: 0.9rem;
+  }
+
+  /* Responsive selected display */
+  .selected-display {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+    margin-top: 15px;
+  }
+
+  .selected-numbers {
+    font-size: 0.95rem;
   } 
 
   /* Step 2: Form elements */
@@ -821,36 +1222,8 @@ body.step3 #result {
     color: #ffffff;
   }
 
-  /* Step 3: Scale table further to fit without scroll */
   body.step3 .grid-container {
     gap: 6px;
-  }
-
-  body.step3 .row-numbers {
-    margin-right: 6px;
-    grid-auto-rows: 48px;
-    font-size: 13px;
-    min-width: 28px;
-  } 
-
-  body.step3 .row-numbers div {
-    min-width: 28px;
-    font-size: 13px;
-  }
-
-  body.step3 .grid {
-    max-width: calc(100vw - 60px);
-    grid-template-columns: repeat(var(--cols), 48px);
-    background-color: #f5f7fa;
-    padding: 3px;
-  } 
-
-  body.step3 .cell {
-    width: 48px;
-    height: 48px;
-    font-size: 12px;
-    border-bottom: 3px solid #e74c3c;
-    background-color: #ffffff;
   } 
 
   /* Step 3: Form elements */
@@ -885,11 +1258,6 @@ body.step3 #result {
     color: #ffffff;
   }
 
-  body.step3 #result {
-    font-size: 28px;
-    letter-spacing: 3px;
-  }
-
   body.step3 #loading {
     font-size: 18px;
   }
@@ -906,30 +1274,32 @@ body.step3 #result {
   /* Table instruction responsive */
   body.step2 .table-instruction,
   body.step3 .table-instruction {
-    font-size: 13px;
-    margin-bottom: 8px;
+    font-size: 12px;
+    margin-bottom: 6px;
     padding: 6px 4px;
-    min-height: 110px;
+    min-height: 72px;
   }
 
   body.step2 .grid {
     max-width: calc(100vw - 20px);
-    grid-template-columns: repeat(var(--cols), 40px);
+    grid-template-columns: repeat(var(--cols), var(--cell-size));
     background-color: #f5f7fa;
     padding: 2px;
   } 
 
   body.step2 .cell {
-    width: 40px;
-    height: 40px;
+    width: var(--cell-size);
+    height: var(--cell-size);
     font-size: 12px;
     border-right: 3px solid #e74c3c;
     background-color: #ffffff;
   } 
 
-  body.step2 .numbers {
-    grid-auto-columns: 40px;
-    font-size: 11px;
+  .step2-numbers {
+    grid-auto-columns: var(--cell-size);
+    gap: 0;
+    margin-bottom: 10px;
+    margin-top: 8px;
   } 
 
   body.step2 .input {
@@ -953,31 +1323,22 @@ body.step3 #result {
   }
 
   body.step3 .grid-container {
-    gap: 5px;
-  }
-
-  body.step3 .row-numbers {
-    margin-right: 5px;
-    grid-auto-rows: 40px;
-    min-width: 24px;
-    font-size: 12px;
-  } 
-
-  body.step3 .row-numbers div {
-    min-width: 24px;
-    font-size: 12px;
+    gap: 6px;
+    max-width: 100%;
+    min-width: 0;
   }
 
   body.step3 .grid {
     max-width: calc(100vw - 50px);
-    grid-template-columns: repeat(var(--cols), 40px);
+    min-width: 0;
+    grid-template-columns: repeat(var(--cols), var(--cell-size));
     background-color: #f5f7fa;
     padding: 2px;
   } 
 
   body.step3 .cell {
-    width: 40px;
-    height: 40px;
+    width: var(--cell-size);
+    height: var(--cell-size);
     font-size: 11px;
     border-bottom: 3px solid #e74c3c;
     background-color: #ffffff;
@@ -1032,16 +1393,16 @@ button.reset-btn {
   box-sizing: border-box;
 
   background: rgba(255, 255, 255, 0.95);
-  border: 2px solid #ddd;
+  border: 1px solid #e2e8f0;
   font-size: 14px;
   font-weight: 600;
-  color: #444;
+  color: #3d4259;
 
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   -webkit-tap-highlight-color: transparent;
 
   /* Reset conflicting inherited/global styles */
@@ -1053,8 +1414,9 @@ button.reset-btn {
 body.step3 button.reset-btn:hover,
 button.reset-btn:hover {
   transform: translateY(-2px) rotate(-5deg);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   background: #fff;
+  border-color: #dde2ec;
 }
 
 body.step3 button.reset-btn:active,
@@ -1103,6 +1465,26 @@ button.reset-btn:active {
     min-height: 44px;
     min-width: 44px;
   }
+
+  /* Extra small number labels */
+  .step2-number-label {
+    font-size: 0.85rem;
+  }
+
+  .step3-number-label {
+    font-size: 0.85rem;
+  }
+
+  /* Responsive selected display */
+  .selected-display {
+    font-size: 0.85rem;
+    padding: 8px 10px;
+    margin-top: 12px;
+  }
+
+  .selected-numbers {
+    font-size: 0.9rem;
+  }
 }
 
 #instructions {
@@ -1117,7 +1499,7 @@ button.reset-btn:active {
    =============================== */
 
 body.step3 {
-  --cell-size: 60px;
+  --cell-size: 48px;
 }
 
 /* Apply the shared cell size to the grid and row labels for step3 */
@@ -1130,40 +1512,53 @@ body.step3 .cell {
   height: var(--cell-size);
 }
 
-body.step3 .row-numbers {
-  /* make each row-number track the same implicit row sizing as grid cells */
-  grid-auto-rows: var(--cell-size);
-}
-
 /* Responsive adjustments: change only the CSS variable so all related sizes stay in sync */
 @media (max-width: 768px) {
+  body.step2,
   body.step3 {
-    --cell-size: 55px;
+    --cell-size: 45px;
   }
-  body.step3 .grid { grid-template-columns: repeat(var(--cols), var(--cell-size)); }
 }
 
 @media (max-width: 480px) {
-  body.step3 {
-    --cell-size: 48px;
-  }
-  body.step3 .grid { grid-template-columns: repeat(var(--cols), var(--cell-size)); }
-  body.step3 .row-numbers { grid-auto-rows: var(--cell-size); }
-}
-
-@media (max-width: 375px) {
+  body.step2,
   body.step3 {
     --cell-size: 40px;
   }
-  body.step3 .grid { grid-template-columns: repeat(var(--cols), var(--cell-size)); }
-  body.step3 .row-numbers { grid-auto-rows: var(--cell-size); }
+}
+
+/* iPhone SE / narrow: smaller cells so 10–15 columns fit without cut-off */
+@media (max-width: 375px) {
+  body.step2,
+  body.step3 {
+    --cell-size: 21px;
+  }
+
+  body.step2 .cell,
+  body.step3 .cell {
+    font-size: 10px;
+  }
+
+  .step2-number-label,
+  .step3-number-label {
+    font-size: 0.7rem;
+  }
 }
 
 @media (max-width: 320px) {
+  body.step2,
   body.step3 {
-    --cell-size: 36px;
+    --cell-size: 18px;
   }
-  body.step3 .grid { grid-template-columns: repeat(var(--cols), var(--cell-size)); }
-  body.step3 .row-numbers { grid-auto-rows: var(--cell-size); }
+
+  body.step2 .cell,
+  body.step3 .cell {
+    font-size: 9px;
+  }
+
+  .step2-number-label,
+  .step3-number-label {
+    font-size: 0.65rem;
+  }
 }
 
