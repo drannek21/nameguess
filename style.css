@@ -1531,7 +1531,7 @@ body.step3 .cell {
 @media (max-width: 375px) {
   body.step2,
   body.step3 {
-    --cell-size: 21px;
+    --cell-size: 40px;
   }
 
   body.step2 .cell,
@@ -1548,7 +1548,7 @@ body.step3 .cell {
 @media (max-width: 320px) {
   body.step2,
   body.step3 {
-    --cell-size: 18px;
+    --cell-size: 35px;
   }
 
   body.step2 .cell,
